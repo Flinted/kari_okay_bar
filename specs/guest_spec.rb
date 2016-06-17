@@ -3,7 +3,7 @@ require 'minitest/rg'
 require_relative('../guest')
 require_relative('../bar')
 require_relative('../room')
-
+require_relative('../song')
 
 class TestGuest < MiniTest::Test
 
@@ -12,6 +12,8 @@ class TestGuest < MiniTest::Test
     @guest1 = Guest.new("Mike", "metal", 100, 1)
     @guest2 = Guest.new("Susan", "rock", 150, 0.5)
     @guest3 = Guest.new("Chris", "indie", 5, 2)
+    @song1 = Song.new("Creep", "Radiohead", "alternative", 220 )
+    @song2 = Song.new("Song 2", "Blur", "indie", 220 )
     @bar = Bar.new
     @room1 = Room.new("Metal Room", 4, 60)
 
@@ -49,4 +51,15 @@ class TestGuest < MiniTest::Test
     assert_equal(false, @guest3.stay_check(@room1))
   end
 
+  def test_if_guest_likes_music
+    @room1.add_song(@song1)
+    @room1.add_song(@song2)
+    assert_equal("WOOHOO!", @guest3.like_music(@room1))
+  end
+
+  def test_if_guest_doesnt_like_music
+    @room1.add_song(@song1)
+    @room1.add_song(@song2)
+    assert_equal("meh", @guest1.like_music(@room1))
+  end
 end

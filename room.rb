@@ -39,7 +39,6 @@ class Room
    
   def leave(guest_to_leave)
     @guests.reject! {|guest| guest.name == guest_to_leave.name}
-    # exiting = @guests.find {|guest| guest.name == guest_to_leave.name}
-    # @guests.delete_at(exiting.index)
   end
+  
 end

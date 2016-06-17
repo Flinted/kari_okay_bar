@@ -31,5 +31,12 @@ class Guest
     @cash > ((room.rate*15) + (@drink_rate * 8)) 
     end
 
+    def like_music(room)
+      like = "meh"
+      for song in room.songs
+        like = "WOOHOO!" if song.genre == @genre
+      end
+      return like
+    end
 
 end

@@ -8,5 +8,4 @@ class Song
     @genre = genre
     @length = length_in_secs
   end
-
 end
