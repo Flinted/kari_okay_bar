@@ -28,8 +28,7 @@ class Room
 
   def playlist_length
     length = 0
-    for song in @songs
-    length += song.length
+    @songs.each do |song| length += song.length
     end
     return length
   end
