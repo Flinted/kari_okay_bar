@@ -23,7 +23,8 @@ class Room
   end
 
   def add_guest(guest)
-    @guests << guest
+    number_guests() < @capacity ? @guests << guest : "Full"
+  
   end
 
   def playlist_length
@@ -32,4 +33,6 @@ class Room
     end
     return length
   end
+
+   
 end
