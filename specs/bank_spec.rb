@@ -1,6 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/rg'
-require_relative('bank')
+require_relative('../bank')
 
 class TestBank < MiniTest::Test
 
