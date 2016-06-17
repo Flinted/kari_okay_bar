@@ -19,4 +19,12 @@ class Guest
       @drinks.size
     end
 
+    def go_to_bank
+      @cash += 50
+    end
+
+    def pay(cost)
+      @cash -= cost
+    end
+
 end

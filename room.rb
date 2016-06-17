@@ -2,10 +2,10 @@ class Room
 
   attr_reader(:name,:capacity,:rate,:guests,:songs)
 
-  def initialize(room_name, capacity, room_rate)
+  def initialize(room_name, capacity, hourly_room_rate)
     @name = room_name
     @capacity = capacity
-    @rate = room_rate
+    @rate = hourly_room_rate/60    #per min
     @guests = []
     @songs = []
   end
@@ -24,7 +24,6 @@ class Room
 
   def add_guest(guest)
     number_guests() < @capacity ? @guests << guest : "Full"
-  
   end
 
   def playlist_length
@@ -34,5 +33,8 @@ class Room
     return length
   end
 
+  def fee
+    @rate * (playlist_length()/60) 
+  end
    
 end
