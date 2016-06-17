@@ -1,7 +1,7 @@
 class Viewer
 
   def menu
-    <<-menu
+    puts <<-menu
       Welcome to the Kari-OK Bar.
 
       1: View Rooms
@@ -14,11 +14,14 @@ class Viewer
 
       Exit. Leave
     menu
+
+    choice = gets.chomp.to_i
+    return choice
   end
 
   def room_display(karaokebar)
     for room in karaokebar.rooms 
-      puts "There is the #{room.name}, it costs #{room.rate} per hour and can hold #{room.capacity}"
+      puts "There is the #{room.name}, it costs £#{room.rate} per minute and can hold #{room.capacity}"
     end
   end
 

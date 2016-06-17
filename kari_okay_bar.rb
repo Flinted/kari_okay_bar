@@ -1,6 +1,12 @@
+require_relative('./viewer')
+require_relative('./song')
+require_relative('./room')
+require_relative('./guest')
+
+
 class KariOkayBar
 
-  attr_reader(:rooms, :guests, :time, :songs)
+  attr_reader(:rooms, :guests, :time, :songs, :viewer)
 
   def initialize(rooms, viewer)
     @viewer = viewer
@@ -30,11 +36,11 @@ class KariOkayBar
     case selection
 
     when 1
-      @viewer.room_display
+      @viewer.room_display(self)
     when 2
-      @viewer.guest_display
+      @viewer.guest_display(self)
     when 3
-      @viewer.songs_display
+      @viewer.songs_display(self)
     when 4
 
     when 5
@@ -49,10 +55,15 @@ class KariOkayBar
       puts @viewer.get_length
       length = gets.chomp.to_i
 
-      @songs << Songs.new(song,artist,genre,length)
+      @songs << Song.new(song,artist,genre,length)
     when "exit"
 
     else
     end
   end
 end
+room1 = Room.new("Metal Room", 4, 60)
+room2 = Room.new("Chill Out Room", 3, 100)
+room3 = Room.new("Dance Room", 8, 150)
+run = KariOkayBar.new([room1,room2,room3],Viewer.new)
+run.menu_choice(run.viewer.menu)
