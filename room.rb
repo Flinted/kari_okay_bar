@@ -22,6 +22,11 @@ class Room
     @songs << song
   end
 
+  def add_list_songs(list)
+    list.each do |song|  @songs << songs
+    end
+  end
+
   def add_guest(guest)
     number_guests() < @capacity ? @guests << guest : "Full"
   end
@@ -38,7 +43,8 @@ class Room
   end
    
   def leave(guest_to_leave)
-    @guests.reject! {|guest| guest.name == guest_to_leave.name}
+    @guests.delete(guest_to_leave)
+    # @guests.reject! {|guest| guest.name == guest_to_leave.name}
   end
-  
+
 end
