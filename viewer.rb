@@ -1,6 +1,7 @@
 class Viewer
 
   def menu
+    system('clear')
     puts <<-menu
       Welcome to the Kari-OK Bar.
 
@@ -8,25 +9,42 @@ class Viewer
       2: View Guests
       3: View Songs
 
-      4: Add Songs 
-      5: Add Guests
-      6: Add Rooms
+      4: Add Room 
+      5: Add Guest
+      6: Add Song
 
-      Exit. Leave
+      7: Assign Song to room
+      8: Assign Guest to room
+      9: Make a Playlist
+      10: Assign a Playlist to room
+
+      11: Move time 15 minutes
+      
+      12: Exit
     menu
-
+    puts
+    print ":>>"
     choice = gets.chomp.to_i
     return choice
   end
+  
+  def prompt
+    putss
+    puts "Enter to continue."
+  end
 
   def room_display(karaokebar)
+    puts "We have the following rooms available:"
+    puts
     for room in karaokebar.rooms 
-      puts "There is the #{room.name}, it costs £#{room.rate} per minute and can hold #{room.capacity}"
+      puts "There is the #{room.name}, it costs £#{room.rate} per minute and can hold #{room.capacity} people.  It currently has #{room.number_guests} guests."
     end
   end
 
   def songs_display(karaokebar)
-    for song in karaokebar.rooms 
+    puts "We have the following songs available:"
+    puts
+    for song in karaokebar.songs
       puts "#{song.name} by #{song.artist}, it is #{song.length} seconds long and in the #{song.genre} genre."
     end
   end
@@ -38,19 +56,23 @@ class Viewer
   end
 
   def get_song
-    print " What is the new song called? "
+    puts " What is the new song called? "
+    print ":>>"
   end
 
   def get_artist
-    print "and who is the artist? "
+    puts "and who is the artist? "
+    print ":>>"
   end
 
   def get_genre
-    print "what genre is it?"
+    puts "what genre is it?"    
+    print ":>>"
   end
 
   def get_length
-    print "how long is the song in seconds?"
+    puts "how long is the song in seconds?"
+    print ":>>"
   end
 
 end

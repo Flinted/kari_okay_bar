@@ -17,7 +17,9 @@ class TestRoom < MiniTest::Test
     @song2 = Song.new("Song 2", "Blur", "indie", 380 )
     @song3 = Song.new("One", "Metallica", "metal", 480 )
     @song4 = Song.new("Pokemon Theme", "Pokemeon", "tv", 250 )
+
     @songs = [@song1,@song2,@song3,@song4]
+    
     @room1 = Room.new("Metal Room", 4, 60)
   end
 

@@ -14,6 +14,7 @@ class KariOkayBar
     @guests = []
     @songs = []
     @time = 0
+    @run = true
   end
 
   def room_count
@@ -32,15 +33,25 @@ class KariOkayBar
     @time += 15
   end
 
+  def runcheck
+    return @run
+  end
+
   def menu_choice(selection)
     case selection
 
     when 1
       @viewer.room_display(self)
+      @viewer.prompt
+      gets.chomp
     when 2
       @viewer.guest_display(self)
+      @viewer.prompt
+      gets.chomp
     when 3
       @viewer.songs_display(self)
+      @viewer.prompt
+      gets.chomp
     when 4
 
     when 5
@@ -56,14 +67,21 @@ class KariOkayBar
       length = gets.chomp.to_i
 
       @songs << Song.new(song,artist,genre,length)
-    when "exit"
-
+    when 12
+      @run = false
     else
+      @viewer.menu
     end
   end
 end
+
+
+
 room1 = Room.new("Metal Room", 4, 60)
 room2 = Room.new("Chill Out Room", 3, 100)
 room3 = Room.new("Dance Room", 8, 150)
 run = KariOkayBar.new([room1,room2,room3],Viewer.new)
+
+while run.runcheck() == true
 run.menu_choice(run.viewer.menu)
+end
