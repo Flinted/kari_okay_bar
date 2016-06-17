@@ -31,6 +31,11 @@ class Room
     number_guests() < @capacity ? @guests << guest : "Full"
   end
 
+  def add_guestlist(guests)
+    guests.each do |guest| number_guests() < @capacity ? @guests << guest : "Full"
+    end
+  end
+
   def playlist_length
     length = 0
     @songs.each do |song| length += song.length

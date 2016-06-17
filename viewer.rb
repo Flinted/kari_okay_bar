@@ -55,6 +55,7 @@ class Viewer
     end
   end
 
+# get song info:
   def get_song
     puts " What is the new song called? "
     print ":>>"
@@ -75,4 +76,41 @@ class Viewer
     print ":>>"
   end
 
+  # get room info:
+  def get_room_name
+    puts "What is the new room called?"
+    print ":>>"
+  end
+
+  def get_room_capacity
+    puts "how many people can this room hold?"
+    print ":>>"
+  end
+
+  def get_room_rate
+    puts "how much is the room per hour?"
+    print ":>>"
+  end
+
+  # get guest info
+
+  def get_guest_name
+    puts "What is the guest called?"
+    print ":>>"
+  end
+
+  def get_guest_genre
+    puts "what is their favourite genre?"
+    print ":>>"
+  end
+
+  def get_guest_cash
+    puts "how much money do they have?"
+    print ":>>"
+  end
+
+  def get_guest_drink_rate
+    puts "how many drinks do they have every 15 minutes?"
+    print ":>>"
+  end
 end

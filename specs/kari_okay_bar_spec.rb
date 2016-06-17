@@ -20,7 +20,7 @@ class TestKariOkayBar < MiniTest::Test
   @song1 = Song.new("Creep", "Radiohead", "alternative", 220 )
   @song2 = Song.new("Song 2", "Blur", "indie", 380 )
   @song3 = Song.new("One", "Metallica", "metal", 480 )
-  @song4 = Song.new("Pokemon Theme", "Pokemeon", "tv", 250 )
+  @song4 = Song.new("Pokemon Theme", "Pokemon", "tv", 250 )
   @songs = [@song1,@song2,@song3,@song4]
   @room1 = Room.new("Metal Room", 4, 60)
   @room2 = Room.new("Chill Out Room", 3, 100)
@@ -42,5 +42,10 @@ class TestKariOkayBar < MiniTest::Test
   def test_remove_room
     @karaoke.remove_room(@room3)
     assert_equal(2, @karaoke.room_count)
+  end
+
+  def test_time_passes
+    @karaoke.time_passes
+    assert_equal(15, @karaoke.time)
   end
 end

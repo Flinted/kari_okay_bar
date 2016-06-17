@@ -53,9 +53,25 @@ class KariOkayBar
       @viewer.prompt
       gets.chomp
     when 4
+      @viewer.get_room_name
+      name = gets.chomp
+      @viewer.get_room_capacity
+      capacity = gets.chomp.to_i
+      @viewer.get_room_rate
+      cost = gets.chomp.to_i
 
+      @rooms << Room.new(name, capacity, cost)
     when 5
+      @viewer.get_guest_name
+      name = gets.chomp
+      @viewer.get_guest_genre
+      genre = gets.chomp
+      @viewer.get_guest_cash
+      cash = gets.chomp.to_i
+      @viewer.get_guest_drink_rate
+      drink_rate = gets.chomp.to_i
 
+      @guests << Guest.new(name,genre,cash,drink_rate)
     when 6
       puts @viewer.get_song
       song = gets.chomp

@@ -18,8 +18,9 @@ class TestRoom < MiniTest::Test
     @song3 = Song.new("One", "Metallica", "metal", 480 )
     @song4 = Song.new("Pokemon Theme", "Pokemeon", "tv", 250 )
 
+    @guests = [@guest1,@guest2,@guest3]
     @songs = [@song1,@song2,@song3,@song4]
-    
+
     @room1 = Room.new("Metal Room", 4, 60)
   end
 
@@ -44,6 +45,11 @@ class TestRoom < MiniTest::Test
   def test_add_guest_to_room
     @room1.add_guest(@guest1)
     assert_equal(1, @room1.number_guests)
+  end
+
+  def test_add_guest_to_room_by_list
+    @room1.add_guestlist(@guests)
+    assert_equal(3, @room1.number_guests)
   end
 
   def test_room_full
