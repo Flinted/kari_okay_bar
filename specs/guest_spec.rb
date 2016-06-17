@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'minitest/rg'
 require_relative('../guest')
 require_relative('../bar')
+require_relative('../room')
 
 
 class TestGuest < MiniTest::Test
@@ -10,7 +11,9 @@ class TestGuest < MiniTest::Test
     @beer = {type: "beer", price: 4}
     @guest1 = Guest.new("Mike", "metal", 100, 1)
     @guest2 = Guest.new("Susan", "rock", 150, 0.5)
+    @guest3 = Guest.new("Chris", "indie", 5, 2)
     @bar = Bar.new
+    @room1 = Room.new("Metal Room", 4, 60)
 
   end 
 
@@ -37,4 +40,13 @@ class TestGuest < MiniTest::Test
     @guest1.pay(50)
     assert_equal(50, @guest1.cash)
   end
+
+  def test_guest_can_afford_to_stay
+    assert_equal(true, @guest1.stay_check(@room1))
+  end
+
+  def test_guest_cannot_afford_to_stay
+    assert_equal(false, @guest3.stay_check(@room1))
+  end
+
 end

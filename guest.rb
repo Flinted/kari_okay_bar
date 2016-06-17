@@ -27,4 +27,9 @@ class Guest
       @cash -= cost
     end
 
+    def stay_check(room)
+    @cash > ((room.rate*15) + (@drink_rate * 8)) 
+    end
+
+
 end
