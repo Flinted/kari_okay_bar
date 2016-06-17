@@ -5,11 +5,13 @@ require_relative('../guest')
 require_relative('../room')
 require_relative('../song')
 require_relative('../bar')
+require_relative('../viewer')
 
 
 class TestKariOkayBar < MiniTest::Test
   
   def setup 
+  @viewer = Viewer.new()
   @guest1 = Guest.new("Mike", "metal", 100, 1)
   @guest2 = Guest.new("Susan", "rock", 150, 0.5)
   @guest3 = Guest.new("Mike", "metal", 100, 1)
@@ -25,8 +27,20 @@ class TestKariOkayBar < MiniTest::Test
   @room3 = Room.new("Dance Room", 8, 150)
   rooms = [@room1,@room2,@room3]
 
-  @Karaoke = KariOkayBar.new(rooms) 
+  @karaoke = KariOkayBar.new(rooms) 
   end
 
+  def test_creation
+    assert_equal(3, @karaoke.room_count)
+  end
 
+  def test_add_room
+    @karaoke.add_room(Room.new("Punk Room", 2, 75))
+    assert_equal(4, @karaoke.room_count)
+  end
+
+  def test_remove_room
+    @karaoke.remove_room(@room3)
+    assert_equal(2, @karaoke.room_count)
+  end
 end
