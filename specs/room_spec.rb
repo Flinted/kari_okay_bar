@@ -58,4 +58,11 @@ class TestRoom < MiniTest::Test
     assert_equal(10, @room1.fee)
   end
 
+  def test_guest_leave
+    @room1.add_guest(@guest1)
+    @room1.add_guest(@guest2)
+    @room1.leave(@guest1)
+    assert_equal("Susan", @room1.guests[0].name)
+  end
+
 end
