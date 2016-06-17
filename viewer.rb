@@ -25,11 +25,13 @@ class Viewer
     puts
     print ":>>"
     choice = gets.chomp.to_i
+    puts
+    puts
     return choice
   end
   
   def prompt
-    putss
+    puts
     puts "Enter to continue."
   end
 
@@ -50,6 +52,8 @@ class Viewer
   end
 
   def guest_display(karaokebar)
+    puts "These are the guests currently waiting for a room:"
+    puts
     for guest in karaokebar.guests 
       puts "#{guest.name} is currently waiting in the bar"
     end

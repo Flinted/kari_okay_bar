@@ -12,7 +12,12 @@ class KariOkayBar
     @viewer = viewer
     @rooms = rooms
     @guests = []
-    @songs = []
+    @songs = [
+      Song.new("Creep", "Radiohead", "alternative", 220 ),
+      Song.new("Song 2", "Blur", "indie", 380 ),
+      Song.new("One", "Metallica", "metal", 480 ),
+      Song.new("Pokemon Theme", "Pokemon", "tv", 250 )
+    ]
     @time = 0
     @run = true
   end
@@ -96,6 +101,8 @@ end
 room1 = Room.new("Metal Room", 4, 60)
 room2 = Room.new("Chill Out Room", 3, 100)
 room3 = Room.new("Dance Room", 8, 150)
+
+
 run = KariOkayBar.new([room1,room2,room3],Viewer.new)
 
 while run.runcheck() == true
