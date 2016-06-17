@@ -21,4 +21,16 @@ class Room
   def add_song(song)
     @songs << song
   end
+
+  def add_guest(guest)
+    @guests << guest
+  end
+
+  def playlist_length
+    length = 0
+    for song in @songs
+    length += song.length
+    end
+    return length
+  end
 end

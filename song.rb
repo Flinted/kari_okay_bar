@@ -6,7 +6,7 @@ class Song
     @name = song_name
     @artist = artist_name
     @genre = genre
-    @length = length
+    @length = length_in_secs
   end
 
 end
