@@ -42,6 +42,24 @@ class KariOkayBar
     return @run
   end
 
+  def assign_song_to_room
+    @viewer.song_assign(self)
+    song = gets.chomp.to_i - 1
+    @viewer.room_assign(self)
+    room = gets.chomp.to_i - 1
+    @rooms[room].add_song(@songs[song])
+    @songs.delete_at(song)
+  end
+
+  def assign_guest_to_room
+    @viewer.guest_assign(self)
+    guest = gets.chomp.to_i - 1
+    @viewer.room_assign(self)
+    room = gets.chomp.to_i - 1
+    @rooms[room].add_guest(@guests[guest])
+    @guests.delete_at(guest)
+  end
+
   def menu_choice(selection)
     case selection
 
@@ -88,6 +106,10 @@ class KariOkayBar
       length = gets.chomp.to_i
 
       @songs << Song.new(song,artist,genre,length)
+    when 7
+      assign_song_to_room()
+    when 8
+      assign_guest_to_room()
     when 12
       @run = false
     else

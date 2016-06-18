@@ -51,6 +51,41 @@ class Viewer
     end
   end
 
+  def song_assign(karaokebar)
+    puts "We have the following songs available for adding:"
+    puts
+    count = 1
+    for song in karaokebar.songs
+      puts "#{count}: #{song.name} by #{song.artist}, it is #{song.length} seconds long and in the #{song.genre} genre."
+      count += 1
+    end
+    puts
+    puts "Please enter the number of the song you wish to assign: "
+  end
+
+  def room_assign(karaokebar)
+    puts "We have the following rooms available:"
+    puts
+    count = 1
+    for room in karaokebar.rooms 
+      puts "#{count}: There is the #{room.name}, it costs £#{room.rate} per minute and can hold #{room.capacity} people.  It currently has #{room.number_guests} guests."
+      count +=1
+    end
+    puts "Which room would you like to assign?"
+  end
+
+  def guest_assign(karaokebar)
+    puts "These are the guests currently waiting for a room:"
+    puts
+    count = 1
+    for guest in karaokebar.guests 
+      puts "#{count}: #{guest.name} is currently waiting in the bar"
+      count +=1
+    end
+    puts
+    puts "Please enter the guest you wish to assign: "
+  end
+
   def guest_display(karaokebar)
     puts "These are the guests currently waiting for a room:"
     puts
