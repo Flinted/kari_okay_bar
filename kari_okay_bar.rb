@@ -31,18 +31,6 @@ class KariOkayBar
     @cash = 0
   end
 
-  def room_count
-    @rooms.size
-  end
-
-  def add_room(new_room)
-    @rooms << new_room
-  end
-
-  def remove_room(room)
-    @rooms.delete(room)
-  end
-
   def time_passes
     @time += 30
     for room in @rooms
@@ -61,15 +49,41 @@ class KariOkayBar
     end
   end
 
+  def room_count
+    @rooms.size
+  end
+
+  def add_room(new_room)
+    @rooms << new_room
+  end
+
+  def remove_room(room)
+    @rooms.delete(room)
+  end
+
   def runcheck
     return @run
   end
 
   def playlist_length
     length = 0
+    @playlist.compact!
     @playlist.each do |song| length += song.length
     end
     return length
+  end
+
+  def add_new_song
+    puts @viewer.get_song
+    song = gets.chomp
+    puts @viewer.get_artist
+    artist = gets.chomp
+    puts @viewer.get_genre
+    genre = gets.chomp
+    puts @viewer.get_length
+    length = gets.chomp.to_i
+
+    @songs << Song.new(song,artist,genre,length)
   end
 
   def assign_song_to_room
@@ -84,6 +98,30 @@ class KariOkayBar
     gets.chomp
   end
 
+  def add_new_room
+    @viewer.get_room_name
+    name = gets.chomp
+    @viewer.get_room_capacity
+    capacity = gets.chomp.to_i
+    @viewer.get_room_rate
+    cost = gets.chomp.to_i
+
+    @rooms << Room.new(name, capacity, cost)
+  end
+
+  def add_new_guest
+    @viewer.get_guest_name
+    name = gets.chomp
+    @viewer.get_guest_genre
+    genre = gets.chomp
+    @viewer.get_guest_cash
+    cash = gets.chomp.to_i
+    @viewer.get_guest_drink_rate
+    drink_rate = gets.chomp.to_i
+
+    @guests << Guest.new(name,genre,cash,drink_rate)
+  end
+
   def make_guest_group
     system('clear')
       end_loop = false
@@ -95,6 +133,7 @@ class KariOkayBar
         guest_ref = gets.chomp.to_i-1
         @guest_group << @guests[guest_ref]
         @guests.delete_at(guest_ref)
+        @guest_group.compact!
         @viewer.confirm_loop()
         end_loop = true if  gets.chomp.upcase != "Y"
       end
@@ -159,7 +198,7 @@ class KariOkayBar
 
     when 1
       @viewer.room_display(self)
-      @viewer.prompt
+      @viewer.prompt()
       gets.chomp
     when 2
       @viewer.guest_display(self)
@@ -170,36 +209,11 @@ class KariOkayBar
       @viewer.prompt
       gets.chomp
     when 4 #add new room
-      @viewer.get_room_name
-      name = gets.chomp
-      @viewer.get_room_capacity
-      capacity = gets.chomp.to_i
-      @viewer.get_room_rate
-      cost = gets.chomp.to_i
-
-      @rooms << Room.new(name, capacity, cost)
+      add_new_room()
     when 5 #add new guest
-      @viewer.get_guest_name
-      name = gets.chomp
-      @viewer.get_guest_genre
-      genre = gets.chomp
-      @viewer.get_guest_cash
-      cash = gets.chomp.to_i
-      @viewer.get_guest_drink_rate
-      drink_rate = gets.chomp.to_i
-
-      @guests << Guest.new(name,genre,cash,drink_rate)
+      add_new_guest()
     when 6 #add new song
-      puts @viewer.get_song
-      song = gets.chomp
-      puts @viewer.get_artist
-      artist = gets.chomp
-      puts @viewer.get_genre
-      genre = gets.chomp
-      puts @viewer.get_length
-      length = gets.chomp.to_i
-
-      @songs << Song.new(song,artist,genre,length)
+      add_new_song()
     when 7 #assign song to room
       assign_song_to_room()
     when 8 #assign guest to room
