@@ -41,6 +41,7 @@ class Viewer
   end
 
   def room_display(karaokebar)
+    puts
     puts "We have the following rooms available:"
     puts
     for room in karaokebar.rooms 
@@ -49,6 +50,7 @@ class Viewer
   end
 
   def songs_display(karaokebar)
+    puts
     puts "We have the following songs available:"
     puts
     for song in karaokebar.songs
@@ -57,6 +59,7 @@ class Viewer
   end
 
   def song_assign(karaokebar)
+    puts
     puts "We have the following songs available for adding:"
     puts
     count = 1
@@ -69,6 +72,7 @@ class Viewer
   end
 
   def playlist_info(karaokebar)
+    puts
     puts "The current playlist is #{karaokebar.playlist_length} seconds long."
     puts
     puts "The following songs are in the playlist."
@@ -80,22 +84,25 @@ class Viewer
   end
  
   def confirm_playlist_assign(room)
-    puts "You have succesfully assigned the playlist to the #{rooom.name} room. The cost for this lists duration for this room is £#{room.fee}."
+    puts
+    puts "You have succesfully assigned the playlist to the #{room.name} room. The cost for this lists duration for this room is £#{room.fee}."
   end
 
 
   def room_assign(karaokebar)
+    puts
     puts "We have the following rooms available:"
     puts
     count = 1
     for room in karaokebar.rooms 
-      puts "#{count}: There is the #{room.name}, it costs £#{room.rate} per minute and can hold #{room.capacity} people.  It currently has #{room.number_guests} guests."
+      puts "#{count}: There is the #{room.name}, it costs £#{room.rate} per minute and can hold #{room.capacity} people.  It currently has #{room.number_guests} guests and #{room.number_songs} songs assigned."
       count +=1
     end
     puts "Which room would you like to assign?"
   end
 
   def guest_assign(karaokebar)
+    puts
     puts "These are the guests currently waiting for a room:"
     puts
     count = 1

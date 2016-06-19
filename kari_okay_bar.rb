@@ -131,25 +131,28 @@ class KariOkayBar
 
       @songs << Song.new(song,artist,genre,length)
     when 7
+      system('clear')
       assign_song_to_room()
       puts @viewer.prompt()
       gets.chomp
     when 8
+      system('clear')
       assign_guest_to_room()
       puts @viewer.prompt()
       gets.chomp
 
     when 9
+      system('clear')
       make_playlist()
-
     when 10
+      system('clear')
       @viewer.playlist_info(self)
       @viewer.room_assign(self)
       room = gets.chomp.to_i-1
       @rooms[room].add_list_songs(@playlist)
       @playlist.clear
       puts
-      puts @viewer.confirm_playlist_assign(room)
+      puts @viewer.confirm_playlist_assign(@rooms[room])
     when 12
       @run = false
     else
