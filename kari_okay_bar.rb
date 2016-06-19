@@ -13,7 +13,11 @@ class KariOkayBar
     @viewer = viewer
     @rooms = rooms
     @bar = bar
-    @guests = []
+    @guests = [
+      Guest.new("Mike", "metal", 100, 1),
+      Guest.new("Susan", "rock", 150, 0.5),
+      Guest.new("Chris", "indie", 500, 2)
+    ]
     @songs = [
       Song.new("Creep", "Radiohead", "alternative", 220 ),
       Song.new("Song 2", "Blur", "indie", 380 ),
@@ -69,15 +73,19 @@ class KariOkayBar
   end
 
   def assign_song_to_room
+    system('clear')
     @viewer.song_assign(self)
     song = @songs[gets.chomp.to_i - 1]
     @viewer.room_assign(self)
     room = @rooms[gets.chomp.to_i - 1]
     room.add_song(song)
     @viewer.confirm_assign(song,room)
+    puts @viewer.prompt()
+    gets.chomp
   end
 
   def make_guest_group
+    system('clear')
       end_loop = false
       while end_loop == false
         system('clear')
@@ -86,11 +94,14 @@ class KariOkayBar
         @viewer.guest_assign(self)
         guest_ref = gets.chomp.to_i-1
         @guest_group << @guests[guest_ref]
+        @guests.delete_at(guest_ref)
         @viewer.confirm_loop()
         end_loop = true if  gets.chomp.upcase != "Y"
       end
-    end
+  end
+
   def assign_guest_to_room
+    system("clear")
     @viewer.guest_assign(self)
     guest = @guests[gets.chomp.to_i - 1]
     @viewer.room_assign(self)
@@ -98,9 +109,25 @@ class KariOkayBar
     room.add_guest(guest)
     @guests.delete(guest)
     @viewer.confirm_assign(guest,room)
+    puts @viewer.prompt()
+    gets.chomp
+  end
+
+  def assign_guest_group
+    system('clear')
+    @viewer.group_info(self)
+    @viewer.room_assign(self)
+    room = gets.chomp.to_i-1
+    @rooms[room].add_guestlist(@guest_group.compact)
+    @guest_group.clear
+    puts
+    puts @viewer.confirm_group_assign(@rooms[room])
+    puts @viewer.prompt
+    gets.chomp
   end
 
   def make_playlist()
+    system('clear')
     end_loop = false
     while end_loop == false
       system('clear')
@@ -112,6 +139,19 @@ class KariOkayBar
       @viewer.confirm_loop()
       end_loop = true if  gets.chomp.upcase != "Y"
     end
+  end
+
+  def assign_playlist()
+    system('clear')
+    @viewer.playlist_info(self)
+    @viewer.room_assign(self)
+    room = gets.chomp.to_i-1
+    @rooms[room].add_list_songs(@playlist.compact)
+    @playlist.clear
+    puts
+    puts @viewer.confirm_playlist_assign(@rooms[room])
+    puts @viewer.prompt
+    gets.chomp
   end
 
   def menu_choice(selection)
@@ -161,44 +201,17 @@ class KariOkayBar
 
       @songs << Song.new(song,artist,genre,length)
     when 7 #assign song to room
-      system('clear')
       assign_song_to_room()
-      puts @viewer.prompt()
-      gets.chomp
     when 8 #assign guest to room
-      system('clear')
       assign_guest_to_room()
-      puts @viewer.prompt()
-      gets.chomp
-
     when 9 #make playlist
-      system('clear')
       make_playlist()
     when 10 #assign playlist
-      system('clear')
-      @viewer.playlist_info(self)
-      @viewer.room_assign(self)
-      room = gets.chomp.to_i-1
-      @rooms[room].add_list_songs(@playlist)
-      @playlist.clear
-      puts
-      puts @viewer.confirm_playlist_assign(@rooms[room])
-      puts @viewer.prompt
-      gets.chomp
-    when 11
-      system('clear')
+      assign_playlist()
+    when 11 #make guest group
       make_guest_group()
-    when 12
-      system('clear')
-      @viewer.group_info(self)
-      @viewer.room_assign(self)
-      room = gets.chomp.to_i-1
-      @rooms[room].add_guestlist(@guest_group)
-      @guest_group.clear
-      puts
-      puts @viewer.confirm_group_assign(@rooms[room])
-      puts @viewer.prompt
-      gets.chomp
+    when 12 #assign guest group
+      assign_guest_group()
     when 15
       time_passes()
     when 20

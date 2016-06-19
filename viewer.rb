@@ -68,11 +68,11 @@ class Viewer
 
   def money(cash)
     puts
-    puts "The Kari-OK bar now has £#{cash}. "
+    puts "The Kari-OK bar now has £#{cash.round(2)}. "
   end
 
   def room_summary(room)
-   puts  "The #{room.name} cost £#{room.fee} for a #{room.playlist_length} second long playlist, there are now #{room.number_guests} guests left in the room."
+   puts  "The #{room.name} cost £#{room.fee.round(2)} for a #{room.playlist_length} second long playlist, there are now #{room.number_guests} guests left in the room."
   end
 
   def songs_display(karaokebar)
@@ -120,7 +120,7 @@ class Viewer
 
   def confirm_playlist_assign(room)
     puts
-    puts "You have succesfully assigned the playlist to the #{room.name} room. The cost for this lists duration for this room is £#{room.fee}."
+    puts "You have succesfully assigned the playlist to the #{room.name} room. The cost for this lists duration for this room is £#{room.fee.round(2)}."
 
   end
 

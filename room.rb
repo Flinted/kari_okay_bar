@@ -44,7 +44,7 @@ class Room
   end
 
   def fee
-    @rate * (playlist_length()/60) 
+    @rate * (playlist_length()/60.0) 
   end
    
   def leave(guest_to_leave)
