@@ -21,19 +21,23 @@ class Viewer
       1: View Rooms
       2: View Guests
       3: View Songs
-
+    
       4: Add Room 
       5: Add Guest
       6: Add Song
-
+      
       7: Assign Song to room
       8: Assign Guest to room
+      
       9: Make a Playlist
       10: Assign a Playlist to room
-
-      11: Move time 15 minutes
+    
+      11: Make a Guest Group
+      12: Assign Group to room
+      ________________________
+      15: START THE PARTY! (run the rooms)
       
-      12: Exit
+      20: Exit
     menu
     puts
     print ":>>"
@@ -60,6 +64,15 @@ class Viewer
     for room in karaokebar.rooms 
       puts "There is the #{room.name}, it costs £#{room.rate} per minute and can hold #{room.capacity} people.  It currently has #{room.number_guests} guests and #{room.number_songs} songs assigned."
     end
+  end
+
+  def money(cash)
+    puts
+    puts "The Kari-OK bar now has £#{cash}. "
+  end
+
+  def room_summary(room)
+   puts  "The #{room.name} cost £#{room.fee} for a #{room.playlist_length} second long playlist, there are now #{room.number_guests} guests left in the room."
   end
 
   def songs_display(karaokebar)
@@ -95,13 +108,27 @@ class Viewer
         count += 1
     end
   end
- 
+  
+  def group_info(karaokebar)
+    puts
+    puts "The following people are in this group."
+    puts
+    for guest in karaokebar.guest_group
+        puts "#{guest.name}"
+    end
+  end
+
   def confirm_playlist_assign(room)
     puts
     puts "You have succesfully assigned the playlist to the #{room.name} room. The cost for this lists duration for this room is £#{room.fee}."
 
   end
 
+  def confirm_group_assign(room)
+    puts
+    puts "You have succesfully assigned the group to the #{room.name} room."
+
+  end
 
   def room_assign(karaokebar)
     puts
@@ -142,10 +169,9 @@ class Viewer
   end
 
   def guest_enjoy(room, guest, enjoy)
-    puts
     puts "#{guest.name} thinks the music is #{enjoy} in the #{room.name}."
   end
-  
+
 # get song info:
   def get_song
     puts " What is the new song called? "

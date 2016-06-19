@@ -23,7 +23,7 @@ class Room
   end
 
   def add_list_songs(list)
-    list.each do |song|  @songs << songs
+    list.each do |song|  @songs << song
     end
   end
 

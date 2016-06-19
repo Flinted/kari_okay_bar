@@ -40,7 +40,7 @@ class KariOkayBar
   end
 
   def time_passes
-    @time += 15
+    @time += 30
     for room in @rooms
       for guest in room.guests 
         @cash += guest.pay(room.fee)
@@ -49,7 +49,10 @@ class KariOkayBar
         # guest.buy_drink(@bar.get_drink)
         room.leave(guest) if guest.stay_check(room) == false
       end
-      puts @viewer.prompt
+      puts
+      @viewer.room_summary(room)
+      puts @viewer.money(@cash)
+      @viewer.prompt
       gets.chomp
     end
   end
@@ -74,6 +77,19 @@ class KariOkayBar
     @viewer.confirm_assign(song,room)
   end
 
+  def make_guest_group
+      end_loop = false
+      while end_loop == false
+        system('clear')
+        @viewer.group_info(self)
+        puts
+        @viewer.guest_assign(self)
+        guest_ref = gets.chomp.to_i-1
+        @guest_group << @guests[guest_ref]
+        @viewer.confirm_loop()
+        end_loop = true if  gets.chomp.upcase != "Y"
+      end
+    end
   def assign_guest_to_room
     @viewer.guest_assign(self)
     guest = @guests[gets.chomp.to_i - 1]
@@ -164,14 +180,28 @@ class KariOkayBar
       @viewer.room_assign(self)
       room = gets.chomp.to_i-1
       @rooms[room].add_list_songs(@playlist)
-      # @playlist.clear
+      @playlist.clear
       puts
       puts @viewer.confirm_playlist_assign(@rooms[room])
       puts @viewer.prompt
       gets.chomp
     when 11
-      time_passes()
+      system('clear')
+      make_guest_group()
     when 12
+      system('clear')
+      @viewer.group_info(self)
+      @viewer.room_assign(self)
+      room = gets.chomp.to_i-1
+      @rooms[room].add_guestlist(@guest_group)
+      @guest_group.clear
+      puts
+      puts @viewer.confirm_group_assign(@rooms[room])
+      puts @viewer.prompt
+      gets.chomp
+    when 15
+      time_passes()
+    when 20
       @run = false
     else
       @viewer.menu

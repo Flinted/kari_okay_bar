@@ -54,12 +54,12 @@ class TestGuest < MiniTest::Test
   def test_if_guest_likes_music
     @room1.add_song(@song1)
     @room1.add_song(@song2)
-    assert_equal("WOOHOO!", @guest3.like_music(@room1))
+    assert_equal("brilliant", @guest3.like_music(@room1))
   end
 
   def test_if_guest_doesnt_like_music
     @room1.add_song(@song1)
     @room1.add_song(@song2)
-    assert_equal("meh", @guest1.like_music(@room1))
+    assert_equal("a bit shit", @guest1.like_music(@room1))
   end
 end
