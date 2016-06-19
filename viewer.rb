@@ -35,6 +35,11 @@ class Viewer
     puts "Enter to continue."
   end
 
+  def confirm_loop
+    puts
+    puts "Would you like to add another? Y/N"
+  end
+
   def room_display(karaokebar)
     puts "We have the following rooms available:"
     puts
@@ -63,6 +68,22 @@ class Viewer
     puts "Please enter the number of the song you wish to assign: "
   end
 
+  def playlist_info(karaokebar)
+    puts "The current playlist is #{karaokebar.playlist_length} seconds long."
+    puts
+    puts "The following songs are in the playlist."
+    count = 1
+    for song in karaokebar.playlist
+        puts "#{count}: #{song.name} by #{song.artist}, it is #{song.length} seconds long and in the #{song.genre} genre."
+        count += 1
+    end
+  end
+ 
+  def confirm_playlist_assign(room)
+    puts "You have succesfully assigned the playlist to the #{rooom.name} room. The cost for this lists duration for this room is £#{room.fee}."
+  end
+
+
   def room_assign(karaokebar)
     puts "We have the following rooms available:"
     puts
@@ -84,6 +105,11 @@ class Viewer
     end
     puts
     puts "Please enter the guest you wish to assign: "
+  end
+
+  def confirm_assign(assigned, room)
+    puts
+    puts "Added #{assigned.name} to #{room.name} room."
   end
 
   def guest_display(karaokebar)

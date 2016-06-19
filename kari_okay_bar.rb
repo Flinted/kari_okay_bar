@@ -6,7 +6,7 @@ require_relative('./guest')
 
 class KariOkayBar
 
-  attr_reader(:rooms, :guests, :time, :songs, :viewer)
+  attr_reader(:rooms, :guests, :time, :songs, :viewer, :guest_group, :playlist)
 
   def initialize(rooms, viewer)
     @viewer = viewer
@@ -18,6 +18,8 @@ class KariOkayBar
       Song.new("One", "Metallica", "metal", 480 ),
       Song.new("Pokemon Theme", "Pokemon", "tv", 250 )
     ]
+    @guest_group = []
+    @playlist =[]
     @time = 0
     @run = true
   end
@@ -42,22 +44,44 @@ class KariOkayBar
     return @run
   end
 
+  def playlist_length
+    length = 0
+    @playlist.each do |song| length += song.length
+    end
+    return length
+  end
+
   def assign_song_to_room
     @viewer.song_assign(self)
-    song = gets.chomp.to_i - 1
+    song = @songs[gets.chomp.to_i - 1]
     @viewer.room_assign(self)
-    room = gets.chomp.to_i - 1
-    @rooms[room].add_song(@songs[song])
-    @songs.delete_at(song)
+    room = @rooms[gets.chomp.to_i - 1]
+    room.add_song(song)
+    @viewer.confirm_assign(song,room)
   end
 
   def assign_guest_to_room
     @viewer.guest_assign(self)
-    guest = gets.chomp.to_i - 1
+    guest = @guests[gets.chomp.to_i - 1]
     @viewer.room_assign(self)
-    room = gets.chomp.to_i - 1
-    @rooms[room].add_guest(@guests[guest])
-    @guests.delete_at(guest)
+    room = @rooms[gets.chomp.to_i - 1]
+    room.add_guest(guest)
+    @guests.delete(guest)
+    @viewer.confirm_assign(guest,room)
+  end
+
+  def make_playlist()
+    end_loop = false
+    while end_loop == false
+      system('clear')
+      @viewer.playlist_info(self)
+      puts
+      @viewer.song_assign(self)
+      song_ref = gets.chomp.to_i-1
+      @playlist << @songs[song_ref]
+      @viewer.confirm_loop()
+      end_loop = true if  gets.chomp.upcase != "Y"
+    end
   end
 
   def menu_choice(selection)
@@ -108,8 +132,24 @@ class KariOkayBar
       @songs << Song.new(song,artist,genre,length)
     when 7
       assign_song_to_room()
+      puts @viewer.prompt()
+      gets.chomp
     when 8
       assign_guest_to_room()
+      puts @viewer.prompt()
+      gets.chomp
+
+    when 9
+      make_playlist()
+
+    when 10
+      @viewer.playlist_info(self)
+      @viewer.room_assign(self)
+      room = gets.chomp.to_i-1
+      @rooms[room].add_list_songs(@playlist)
+      @playlist.clear
+      puts
+      puts @viewer.confirm_playlist_assign(room)
     when 12
       @run = false
     else
