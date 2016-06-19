@@ -3,6 +3,19 @@ class Viewer
   def menu
     system('clear')
     puts <<-menu
+
+
+      8  dP           w      
+      8wdP  .d88 8d8b w      
+      88Yb  8  8 8P   8 wwww 
+      8  Yb `Y88 8    8      
+                             
+      .d88b. 8                
+      8P  Y8 8.dP .d88 Yb  dP 
+      8b  d8 88b  8  8  YbdP  
+      `Y88P' 8 Yb `Y88   dP   
+                        dP  
+
       Welcome to the Kari-OK Bar.
 
       1: View Rooms
@@ -45,7 +58,7 @@ class Viewer
     puts "We have the following rooms available:"
     puts
     for room in karaokebar.rooms 
-      puts "There is the #{room.name}, it costs £#{room.rate} per minute and can hold #{room.capacity} people.  It currently has #{room.number_guests} guests."
+      puts "There is the #{room.name}, it costs £#{room.rate} per minute and can hold #{room.capacity} people.  It currently has #{room.number_guests} guests and #{room.number_songs} songs assigned."
     end
   end
 
@@ -86,6 +99,7 @@ class Viewer
   def confirm_playlist_assign(room)
     puts
     puts "You have succesfully assigned the playlist to the #{room.name} room. The cost for this lists duration for this room is £#{room.fee}."
+
   end
 
 
@@ -127,6 +141,11 @@ class Viewer
     end
   end
 
+  def guest_enjoy(room, guest, enjoy)
+    puts
+    puts "#{guest.name} thinks the music is #{enjoy} in the #{room.name}."
+  end
+  
 # get song info:
   def get_song
     puts " What is the new song called? "

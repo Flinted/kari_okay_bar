@@ -2,15 +2,17 @@ require_relative('./viewer')
 require_relative('./song')
 require_relative('./room')
 require_relative('./guest')
+require_relative('./bar')
 
 
 class KariOkayBar
 
-  attr_reader(:rooms, :guests, :time, :songs, :viewer, :guest_group, :playlist)
+  attr_reader(:rooms, :guests, :bar, :time, :songs, :viewer, :guest_group, :playlist, :cash)
 
-  def initialize(rooms, viewer)
+  def initialize(rooms, viewer, bar)
     @viewer = viewer
     @rooms = rooms
+    @bar = bar
     @guests = []
     @songs = [
       Song.new("Creep", "Radiohead", "alternative", 220 ),
@@ -22,6 +24,7 @@ class KariOkayBar
     @playlist =[]
     @time = 0
     @run = true
+    @cash = 0
   end
 
   def room_count
@@ -38,6 +41,17 @@ class KariOkayBar
 
   def time_passes
     @time += 15
+    for room in @rooms
+      for guest in room.guests 
+        @cash += guest.pay(room.fee)
+        enjoy = guest.like_music(room)
+        @viewer.guest_enjoy( room, guest, enjoy )
+        # guest.buy_drink(@bar.get_drink)
+        room.leave(guest) if guest.stay_check(room) == false
+      end
+      puts @viewer.prompt
+      gets.chomp
+    end
   end
 
   def runcheck
@@ -99,7 +113,7 @@ class KariOkayBar
       @viewer.songs_display(self)
       @viewer.prompt
       gets.chomp
-    when 4
+    when 4 #add new room
       @viewer.get_room_name
       name = gets.chomp
       @viewer.get_room_capacity
@@ -108,7 +122,7 @@ class KariOkayBar
       cost = gets.chomp.to_i
 
       @rooms << Room.new(name, capacity, cost)
-    when 5
+    when 5 #add new guest
       @viewer.get_guest_name
       name = gets.chomp
       @viewer.get_guest_genre
@@ -119,7 +133,7 @@ class KariOkayBar
       drink_rate = gets.chomp.to_i
 
       @guests << Guest.new(name,genre,cash,drink_rate)
-    when 6
+    when 6 #add new song
       puts @viewer.get_song
       song = gets.chomp
       puts @viewer.get_artist
@@ -130,29 +144,33 @@ class KariOkayBar
       length = gets.chomp.to_i
 
       @songs << Song.new(song,artist,genre,length)
-    when 7
+    when 7 #assign song to room
       system('clear')
       assign_song_to_room()
       puts @viewer.prompt()
       gets.chomp
-    when 8
+    when 8 #assign guest to room
       system('clear')
       assign_guest_to_room()
       puts @viewer.prompt()
       gets.chomp
 
-    when 9
+    when 9 #make playlist
       system('clear')
       make_playlist()
-    when 10
+    when 10 #assign playlist
       system('clear')
       @viewer.playlist_info(self)
       @viewer.room_assign(self)
       room = gets.chomp.to_i-1
       @rooms[room].add_list_songs(@playlist)
-      @playlist.clear
+      # @playlist.clear
       puts
       puts @viewer.confirm_playlist_assign(@rooms[room])
+      puts @viewer.prompt
+      gets.chomp
+    when 11
+      time_passes()
     when 12
       @run = false
     else
@@ -168,7 +186,7 @@ room2 = Room.new("Chill Out Room", 3, 100)
 room3 = Room.new("Dance Room", 8, 150)
 
 
-run = KariOkayBar.new([room1,room2,room3],Viewer.new)
+run = KariOkayBar.new([room1,room2,room3],Viewer.new, Bar.new)
 
 while run.runcheck() == true
 run.menu_choice(run.viewer.menu)

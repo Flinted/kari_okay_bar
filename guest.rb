@@ -25,6 +25,7 @@ class Guest
 
     def pay(cost)
       @cash -= cost
+      return cost
     end
 
     def stay_check(room)
@@ -32,9 +33,9 @@ class Guest
     end
 
     def like_music(room)
-      like = "meh"
+      like = "a bit shit"
       for song in room.songs
-        like = "WOOHOO!" if song.genre == @genre
+        like = "brilliant" if song.genre.downcase == @genre.downcase
       end
       return like
     end
